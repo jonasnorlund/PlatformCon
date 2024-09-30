@@ -1,0 +1,26 @@
+@url=https://superman.ashyglacier-c41ae2d6.swedencentral.azurecontainerapps.io
+
+
+###
+
+POST {{url}}/Processmessage
+Content-Type: application/json
+
+{
+  "id":1,
+  "dt": "2024-09-29T11:51:37.9661049Z",
+  "text": "Hello PlatformCon!"
+}
+
+###
+
+POST {{url}}/Postmessage
+Content-Type: application/json
+
+{
+  "id":1,
+  "dt": "2024-09-29T11:51:37.9661049Z",
+  "text": "Hello PlatformCon!"
+}
+
+###

@@ -1,0 +1,25 @@
+
+@subscriptionId=[subscriptionId]
+@rg=[resource group]
+@containerappenvironment=[container app environment name]
+
+# az account get-access-token --resource https://management.azure.com/ --query accessToken -o tsv
+
+@token=[INSERT TOKEN HERE]
+PUT https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{rg}}/providers/Microsoft.App/managedEnvironments/{{containerappenvironment}}/daprSubscriptions/sbsubscription?api-version=2023-08-01-preview
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "properties": {
+    "pubsubName": "servicebus",
+    "topic": "messages",
+    "routes": {
+      "default": "/processmessage"
+    },
+    "scopes": [
+      "catwomen"
+    ]
+  }
+}
+

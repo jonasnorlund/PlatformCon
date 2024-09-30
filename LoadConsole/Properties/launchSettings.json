@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LoadConsole": {
+      "commandName": "Project",
+      "commandLineArgs": "http 5 1"
+    }
+  }
+}
