@@ -15,6 +15,9 @@ This repo contains the solution shown during the ACA vs AKS PlatformCon session.
 
 ## Architecture
 
+These are the Azure services that main.bicep will create. 
+
+![Architecture](arch.png)
 
 ## Step by step guide
 
@@ -113,6 +116,8 @@ az containerapp show -g rg-[postfix] --name superman --query properties.configur
 
 Build the LoadConsole application, run the command.
 
+
+
 ```shell
 dotnet build .\LoadConsole\LoadConsole.csproj
 ```
@@ -127,10 +132,14 @@ Threads: int | number of threads to run
 
 Example ".\LoadConsole\bin\Debug\net8.0\LoadConsole.exe http 10 5" runs 10 requests on 5 threads to the http endpoint 
 
+![ACA scaling](scale.png)
+
 Http
 ```shell
 .\LoadConsole\bin\Debug\net8.0\LoadConsole.exe http 10 5
 ```
+
+![ACA scaling](daprize.png)
 
 Servicebus
 ```shell
