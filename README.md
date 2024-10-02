@@ -74,28 +74,7 @@ az deployment group create -g rg-[postfix] -n mainDeploy -f infrastructure/main.
 
 ```
 
-### 5. Create the declarative Dapr subscription
-
-The declarative Dapr subscription needs to be deployed using a REST call. Use the REST client VS Code extension or similar. 
-
-First grab a accesstoken running the following command. 
-
-```shell
-az account get-access-token --resource https://management.azure.com/ --query accessToken -o tsv
-```
-
-Replace the values in the brackets (remove the brackets) in the subscription.http (located in the infrastructure folder) file. Then click "Send request" in the subscription.http
-
-Redeploy the containerapps to pick up the declarative subscription. 
-
-```shell
-
-az deployment group create -g rg-[postfix] -n mainDeploy -f infrastructure/main.bicep -p deploy=true
-
-```
-
-
-### 6. Configure the Loadconsole application 
+### 5. Configure the Loadconsole application 
 
 Replace the values in brackets in LoadConsole/appsettings.json. 
 Grab the unique string (5 characters) that has been created for all the azure services. e.g ns-abc12, then "abc12" is the unique string   
@@ -112,7 +91,7 @@ az containerapp show -g rg-[postfix] --name superman --query properties.configur
 
 ```
 
-### 7. Run the LoadConsole
+### 6. Run the LoadConsole
 
 Build the LoadConsole application, run the command.
 

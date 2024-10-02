@@ -63,8 +63,6 @@ resource rbacAzureContainerRegistry 'Microsoft.Authorization/roleAssignments@202
   }
 }
 
-
-
 resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2021-06-01-preview' = {
   name: 'ns-${name}'
   location: location
@@ -88,7 +86,6 @@ resource rbacServiceBus 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
     principalType: 'ServicePrincipal'
   }
 }
-
 
 resource aca_superman 'Microsoft.App/containerApps@2024-03-01' = if (deploy) {
   name: 'superman'
@@ -223,3 +220,19 @@ resource daprServicebus 'Microsoft.App/managedEnvironments/daprComponents@2023-0
     ]
   }
 }
+
+
+resource daprSubscription 'Microsoft.App/managedEnvironments/daprSubscriptions@2024-02-02-preview' =  if (deploy) {
+  name: 'sbsubscription'
+  parent: containerAppEnvironment
+  properties: {
+    pubsubName: 'servicebus'
+    topic: 'messages'
+    routes: {
+      default: '/processmessage'
+    }
+    scopes: [
+      'catwomen'
+    ]
+  }
+} 
