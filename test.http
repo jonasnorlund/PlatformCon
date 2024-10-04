@@ -1,4 +1,4 @@
-@url=[REPLACE WITH CONTAINER APPS URL]
+@url=[REPLACE URL]
 
 ###
 
@@ -6,7 +6,7 @@ POST {{url}}/Processmessage
 Content-Type: application/json
 
 {
-  "id":1,
+  "id":3,
   "dt": "2024-09-29T11:51:37.9661049Z",
   "text": "Hello PlatformCon 2024!"
 }

@@ -23,9 +23,9 @@ These are the Azure services that main.bicep will create.
 
 This section contains a step-by-step guide to setup and test the demos that was shown during the session. 
 
-### 1. Create a resourcegroup
+### 1. Create a resource group
 
-Choose a postfix for the resourcegroup name, five characters. e.g. "duxcf"
+Choose a postfix for the resource group name, five characters. e.g. "duxcf"
 Replace [postfix] with your postfix in the following code, run the command.
 
 ```shell
@@ -44,7 +44,13 @@ az account show
 
 ```
 
-Run the command.   
+If the correct subscription is not shown run 
+
+```shell
+az account set -s [subscription name]
+```
+
+Deploy the infrastructure using the following command. This will deploy the infrastructure but not the container apps.    
 
 ```shell
 
@@ -52,21 +58,20 @@ az deployment group create -g rg-[postfix] -n mainDeploy -f infrastructure/main.
 
 ```
 
-This creates the Azure services to be used. Wait until the Azure services are deployed, open the Azure portal in a browser and copy the name of the Azure Container Registry, replace [acr] with this name.  
+This creates the Azure services to be used. Wait until the Azure services are deployed, open the Azure portal in a browser and copy the name of the Azure Container Registry, replace [acr] with this name in the next step.  
 
-### 3. Build the container image in Azure registry
+### 3. Build and push the container image in Azure registry
 
-Use Azure Container Registry task to build the image and push it. Run the commands. 
+Use Azure Container Registry task to build the image and push it. Run the command, make sure the sourcecode is not opened in VS.  
 
 ```shell
 
-az acr login -n [acr]
 az acr build -t platformcon/acaapi:1.0 -r [acr] AcaApi/.
 
 ```
 
 ### 4. Deploy the container apps
-Run the command. 
+Run the command with the deploy=true parameter. 
 
 ```shell
 
@@ -74,7 +79,7 @@ az deployment group create -g rg-[postfix] -n mainDeploy -f infrastructure/main.
 
 ```
 
-### 5. Configure the Loadconsole application 
+### 5. Configure the LoadConsole application 
 
 Replace the values in brackets in LoadConsole/appsettings.json. 
 Grab the unique string (5 characters) that has been created for all the azure services. e.g ns-abc12, then "abc12" is the unique string   
@@ -125,7 +130,15 @@ Servicebus
 .\LoadConsole\bin\Debug\net8.0\LoadConsole.exe queue 10 5
 ```
 
-Check logs inside container apps
+
+
+#### Check logs inside container apps
+
+Http
+```shell
+az containerapp logs show --name superman --resource-group rg-[postfix] --type console --follow
+
+```
 
 Servicebus
 ```shell
@@ -133,8 +146,3 @@ az containerapp logs show --name catwomen --resource-group rg-[postfix] --type c
 
 ```
 
-Http
-```shell
-az containerapp logs show --name superman --resource-group rg-[postfix] --type console --follow
-
-```
