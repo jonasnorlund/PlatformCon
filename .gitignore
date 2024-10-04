@@ -398,5 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 note.txt
 appsettings.txt
-LoadConsole/appsettings.json
-LoadConsole/appsettings.json
+local_test.http
