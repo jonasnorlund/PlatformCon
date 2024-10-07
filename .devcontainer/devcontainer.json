@@ -1,0 +1,22 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/universal:2",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.live-server",
+				"ms-dotnettools.vscode-dotnet-runtime",
+				"ms-dotnettools.csdevkit",
+				"ms-azuretools.vscode-bicep"
+			]
+		}
+	},
+		"features": {
+		"ghcr.io/devcontainers/features/azure-cli:1": {
+			"installBicep": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"modules": "Az"
+		}
+	}
+}
