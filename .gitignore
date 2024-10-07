@@ -399,3 +399,6 @@ FodyWeavers.xsd
 note.txt
 appsettings.txt
 local_test.http
+
+# Local test appsettings
+appsettings.local.json

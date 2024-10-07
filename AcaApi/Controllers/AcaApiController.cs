@@ -32,6 +32,6 @@ namespace AcaApi.Controllers
     {
         public DateTime dt { get; set; }
         public string ?text { get; set; }
-        public int id { get; set; }
+        public string ?id { get; set; }
     }
 }

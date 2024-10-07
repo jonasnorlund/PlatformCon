@@ -3,10 +3,13 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"GitHub.copilot-chat",
+				"GitHub.copilot",
 				"ms-vscode.live-server",
 				"ms-dotnettools.vscode-dotnet-runtime",
 				"ms-dotnettools.csdevkit",
-				"ms-azuretools.vscode-bicep"
+				"ms-azuretools.vscode-bicep",
+				"humao.rest-client"
 			]
 		}
 	},

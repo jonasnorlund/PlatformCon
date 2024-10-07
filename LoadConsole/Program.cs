@@ -24,6 +24,7 @@ class Program
     {
         var configuration = new ConfigurationBuilder()
                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+               .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
                .AddEnvironmentVariables()
                .AddCommandLine(args)
                .Build();
@@ -54,17 +55,18 @@ class Program
             var tasks = new Task[numberOfTasks];
             for (int i = 0; i < numberOfTasks; i++)
             {
-                tasks[i] = Task.Run(async () =>
+                var task = i;
+                tasks[task] = Task.Run(async () =>
                 {
                     for (int j = 0; j < requests; j++)
                     {
-                        var msg = new Message { dt = DateTime.UtcNow, text = "Hello, PlatformCon!", id = j };
                         if (type == "http") { 
-                            var response = await client.PostAsJsonAsync(configuration["url"], new Message { dt = DateTime.UtcNow, text = "Hello, PlatformCon!", id = j });
+                            var response = await client.PostAsJsonAsync(configuration["url"], new Message { dt = DateTime.UtcNow, text = "Hello, PlatformCon!", id = $"{task}-{j}" });
                             Console.WriteLine($"Status Code: {response.StatusCode}, Body: {await response.Content.ReadAsStringAsync()}");
                         }
                         else if (type == "queue")
                         {
+                            var msg = new Message { dt = DateTime.UtcNow, text = "Hello, PlatformCon!", id = $"{task}-{j}" };
                             string messageBody = JsonSerializer.Serialize(msg);
                             ServiceBusMessage serviceBusMessage = new ServiceBusMessage(messageBody);
                             await sender.SendMessageAsync(serviceBusMessage);
@@ -84,12 +86,9 @@ class Program
     }
 }
 
-
-    
-
 class Message
 {
     public DateTime dt { get; set; }
     public string text { get; set; }
-    public int id { get; set; }
+    public string id { get; set; }
 }
