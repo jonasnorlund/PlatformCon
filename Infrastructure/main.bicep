@@ -5,12 +5,11 @@ param name string = substring(uniqueString(resourceGroup().id), 0, 5)
 param version string = '1.0'
 param deploy bool = false
 
-
-var azureServiceBusDataReceiverRoleId = '4f6d3b9b-027b-4f4c-9142-0e5a2a2247e0'
 var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
 
 
 resource loganalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+  #disable-next-line BCP334
   name: 'la-${name}'
   location: location
   properties: {
@@ -46,12 +45,14 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2024-03-01' 
 }
 
 resource azureContainerRegistry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
+  #disable-next-line BCP334
   name: 'acr${name}'
   location: location
   sku: {
     name: 'Basic'
   }
 }
+
 
 resource rbacAzureContainerRegistry 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   scope: azureContainerRegistry
@@ -75,16 +76,6 @@ resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2021-06-01-preview
 resource serviceBusQueue 'Microsoft.ServiceBus/namespaces/queues@2021-06-01-preview' = {
   name: 'messages'
   parent: serviceBusNamespace
-}
-
-resource rbacServiceBus 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  scope: serviceBusQueue
-  name: guid(userAssignedManagedIdentity.id, azureServiceBusDataReceiverRoleId, name)
-  properties: {
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', azureServiceBusDataReceiverRoleId)
-    principalId: userAssignedManagedIdentity.properties.principalId
-    principalType: 'ServicePrincipal'
-  }
 }
 
 resource aca_superman 'Microsoft.App/containerApps@2024-03-01' = if (deploy) {
@@ -236,3 +227,5 @@ resource daprSubscription 'Microsoft.App/managedEnvironments/daprSubscriptions@2
     ]
   }
 } 
+
+
