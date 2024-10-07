@@ -11,6 +11,7 @@ RUN dotnet publish -c Release -o out LoadConsole.csproj
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
 COPY --from=build-env /app/out .
 
 # Start
